@@ -1,11 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 
-function Word({ answer, clickedLetter, mistakes, sendMistakes }) {
-    const [result, setResult] = useState([]);
+function Word({ answer, clickedLetter, mistakes, maxMistakes, sendMistakes, sendGameStatus }) {
+    const [result, setResult] = useState(['_ ']);
     const refGuessedLetters = useRef([]);
-
+    const refResult = useState(['_ ']);
     useEffect(() => {
         setResult(innitialWord(answer, clickedLetter));
+        if (mistakes == maxMistakes - 1) {
+            sendGameStatus({status: true, result: 'loss'})
+        }
+        if (!refResult.current.includes("_ ")) {
+            console.log("win")
+            sendGameStatus({status: true, result: 'win'})
+        }
+        
     }, [clickedLetter])
 
     function innitialWord(answer, clickedLetter) {
@@ -22,6 +30,7 @@ function Word({ answer, clickedLetter, mistakes, sendMistakes }) {
         if (!refGuessedLetters.current.includes(clickedLetter)) {
             sendMistakes(Number(mistakes) + 1);
         }
+        refResult.current = res;
         return res;
     }
 

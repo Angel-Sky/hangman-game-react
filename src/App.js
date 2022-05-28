@@ -3,8 +3,9 @@ import './App.css';
 import { useState, useRef } from 'react';
 import Letters from './components/Letters';
 import Word from './components/Word';
-import Visualize from './components/Visualize'
+import Image from './components/Image'
 import Score from './components/Score'
+import EndGame from './components/EndGame'
 
 const gameWords = [
     // 'notebook',
@@ -19,8 +20,9 @@ function App() {
     const [guessedLetters, setGuessedLetters] = useState(new Set());
     const [mistakes, setMistakes] = useState(-1);
     const [maxMistakes] = useState(10);
+    const [isOver, setIsOver] = useState({ status: false, result: 'win' });
     const refAnswer = useRef();
-    console.log(mistakes)
+
     const sendClickedLetter = (r) => {
         setClickedLetter(r);
     };
@@ -29,13 +31,23 @@ function App() {
         setMistakes(r);
     }
 
+    const sendGameStatus = (status, result) => {
+        setIsOver(status, result);
+    }
+
     return (
         <div className="App">
             <h1>Hangman Game</h1>
-            <Score mistakes={mistakes} maxMistakes={maxMistakes} />
-            <Visualize mistakes={mistakes} />
-            <Word answer={randomWord} clickedLetter={clickedLetter} result={refAnswer.current} mistakes={mistakes} sendMistakes={sendMistakes} />
-            <Letters word={randomWord} aplhabet={aplhabet} sendClickedLetter={sendClickedLetter} />
+            <Score mistakes={mistakes} maxMistakes={maxMistakes} sendGameStatus={sendGameStatus} />
+            <Image mistakes={mistakes} />
+            <Word answer={randomWord} clickedLetter={clickedLetter} mistakes={mistakes} maxMistakes={maxMistakes} sendMistakes={sendMistakes} sendGameStatus={sendGameStatus} />
+
+            {isOver.status
+                ?
+                <EndGame answer={randomWord} result={isOver.result} />
+                :
+                <Letters word={randomWord} aplhabet={aplhabet} sendClickedLetter={sendClickedLetter} />
+            }
         </div>
     );
 }

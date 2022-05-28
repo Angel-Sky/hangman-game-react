@@ -11,7 +11,7 @@ import step8 from "../images/step8.png";
 import step9 from "../images/step9.png";
 import step10 from "../images/step10.png";
 
-function Word({mistakes}) {
+function Image({mistakes}) {
     const [img] = useState([step0, step1, step2, step3, step4, step5, step6, step7, step8, step8, step9, step10]);
 
     return (
@@ -19,4 +19,4 @@ function Word({mistakes}) {
     );
 }
 
-export default Word;
+export default Image;
