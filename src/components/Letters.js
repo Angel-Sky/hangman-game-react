@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 
 function Letters({ word, aplhabet, sendClickedLetter }) {
-    const [randomLetters, setRandomLetters] = useState([])
+    const [randomLetters, setRandomLetters] = useState([]);
     const refNewLetter = useRef();
-    
+
     useEffect(() => {
         let result = new Set();
         let n = word.length;
@@ -42,12 +42,18 @@ function Letters({ word, aplhabet, sendClickedLetter }) {
     async function handleCharClick(e) {
         e.preventDefault();
         let char = e.target.innerHTML;
-        updateLetter(char)
+        updateLetter(char);
         await sendClickedLetter(refNewLetter.current);
     }
 
     return (
-        <div>{randomLetters.map((x, i) => <Button variant="info" onClick={handleCharClick} key={i}>{x}</Button>)}</div>
+        <div>{randomLetters.map((x, i) =>
+            <Button variant="info"
+                onClick={handleCharClick}
+                key={i}>
+                {x}
+            </Button>)}
+        </div>
     );
 }
 
