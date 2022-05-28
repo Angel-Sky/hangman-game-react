@@ -3,8 +3,8 @@ import { Button } from 'react-bootstrap';
 
 function Letters({ word, aplhabet, sendClickedLetter }) {
     const [randomLetters, setRandomLetters] = useState([])
-    const [letter, setLetter] = useState("")
     const refNewLetter = useRef();
+    
     useEffect(() => {
         let result = new Set();
         let n = word.length;
@@ -36,7 +36,6 @@ function Letters({ word, aplhabet, sendClickedLetter }) {
 
     function updateLetter(char) {
         refNewLetter.current = char;
-        setLetter(char)
     }
 
 
@@ -44,10 +43,7 @@ function Letters({ word, aplhabet, sendClickedLetter }) {
         e.preventDefault();
         let char = e.target.innerHTML;
         updateLetter(char)
-        await sendClickedLetter(refNewLetter);
-        // setLetter(char)
-        // sendClickedLetter(e.target.innerHTML);
-        // setResultArr(randomLetters);
+        await sendClickedLetter(refNewLetter.current);
     }
 
     return (

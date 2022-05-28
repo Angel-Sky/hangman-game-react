@@ -1,45 +1,29 @@
 import { useState, useEffect, useRef } from 'react';
 
-function Word({answer, clickedLetter}) {
+function Word({ answer, clickedLetter }) {
     const [result, setResult] = useState([]);
-    const [guessedLetters, setGuessedLetters] = useState(new Set());
-    // const [remnant, setRemnant] = useState([]);
-    const refAnswer = useRef();
-    console.log(clickedLetter)
+    const [guessedLetters, setGuessedLetters] = useState([]);
+   
     useEffect(() => {
-        console.log(clickedLetter)
-        console.log(refAnswer.current)
-        loadWord()
+        setResult(innitialWord(answer, clickedLetter))
     }, [clickedLetter])
 
-    function loadWord() {
-        let res = [];
+    function innitialWord(answer, clickedLetter) {
+        let arr = answer.split("")
         let firstLetter = answer[0];
         let lastLetter = answer[answer.length - 1];
-        res.push(firstLetter);
-        let remnant = answer.slice(1, answer.length - 1).split("")
-        setGuessedLetters(prev => prev.add(firstLetter).add(lastLetter));
-        // setRemnant(a)
-        console.log(remnant)
-
-        if (remnant.includes(clickedLetter)) {
-            setGuessedLetters(prev => prev.add(clickedLetter));
-        }
-        remnant.forEach(ch => {
-            if (guessedLetters.has(ch)) {
-                res.push(ch);
-            } else {
+        let res = []
+        arr.forEach(ch => {
+            ch == firstLetter || ch == lastLetter || ch == clickedLetter || guessedLetters.includes(ch) ?
+                res.push(ch) && setGuessedLetters(old => [...old, ch])
+            :
                 res.push("_ ")
-            }
-        });
-
-        res.push(lastLetter)
-        refAnswer.current = [...res]
-        setResult([...res])
-        // return res;
+        })
+        return res;
     }
+
     return (
-        <div>{refAnswer.current?.map((x, i) => <span key={i}>{x}</span>)}</div> 
+        <div>{result?.map((x, i) => <span key={i}>{x}</span>)}</div>
     );
 }
 
