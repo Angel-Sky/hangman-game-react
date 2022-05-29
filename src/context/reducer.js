@@ -25,7 +25,7 @@ const gameReducer = (state, action) => {
         case 'SET_LETTER':
             return { ...state, clickedLetter: action.payload };
         case 'SET_RANDOM_LETTERS':
-            return { ...state, randomLetters: [...state.randomLetters, ...action.payload] };
+            return { ...state, randomLetters: [...state.randomLetters, action.payload] };
         case 'SET_GUESSED_LETTERS':
             return { ...state, guessedLetters: [...state.guessedLetters, action.payload] };
         case 'INCREASE_MISTAKES':

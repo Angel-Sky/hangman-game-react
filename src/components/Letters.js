@@ -3,11 +3,19 @@ import GameContext from '../context/GameContext';
 const aplhabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 function Letters() {
-    const [{ word }, dispatch] = useContext(GameContext);
+    const [{ word, randomLetters }, dispatch] = useContext(GameContext);
     const refNewLetter = useRef();
     const refRandomLetters = useRef([]);
 
     useEffect(() => {
+        if(randomLetters.length > 0) {
+           refRandomLetters.current = randomLetters;
+        } else {
+            generateLetters();
+        }
+    }, [])
+
+    function generateLetters() {
         let result = new Set();
         let n = word.length;
         (n < 5) ? n = 10 : n = n * 2;
@@ -28,9 +36,10 @@ function Letters() {
             }
             result.add(randomLetter);
         }
-        refRandomLetters.current = [...result]
+        
+        refRandomLetters.current = shuffleLetters([...result])
         dispatch({ type: 'SET_RANDOM_LETTERS', payload: refRandomLetters.current });
-    }, [])
+    }
 
     function handleCharClick(e) {
         e.preventDefault();
@@ -38,8 +47,16 @@ function Letters() {
         dispatch({ type: 'SET_LETTER', payload: refNewLetter.current });
     }
 
+    function shuffleLetters(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
     return (
-        <div>{refRandomLetters.current?.map((x, i) =>
+        <div>{refRandomLetters.current[0]?.map((x, i) =>
             <button
                 onClick={handleCharClick}
                 key={i}>
