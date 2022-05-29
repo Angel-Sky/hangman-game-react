@@ -1,7 +1,24 @@
 const gameWords = [
     'notebook',
     'calculator',
-    'machine'
+    'machine',
+    'cucumber',
+    'avenue',
+    'zombie',
+    'microwave',
+    'oxygen',
+    'awkward',
+    'gossip',
+    'icebox',
+    'science',
+    'salamandra',
+    'hippopotamus',
+    'ostrich',
+    'submarine',
+    'rabbit',
+    'generation',
+    'always',
+    'cake'
 ]
 
 const randomWord = () => { return gameWords[Math.floor(Math.random() * gameWords.length)]; }
