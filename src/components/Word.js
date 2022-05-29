@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import GameContext from '../context/GameContext';
 
-function Word2() {
-    const [{ word, clickedLetter, mistakes, maxMistakes }, dispatch] = useContext(GameContext);
+function Word() {
+    const [{ word, clickedLetter, mistakes, maxMistakes, guessedLetters }, dispatch] = useContext(GameContext);
     const [result, setResult] = useState(['_ ']);
-    const refGuessedLetters = useRef([]);
+    const refGuessedLetters = useRef([guessedLetters]);
     const refResult = useState(['_ ']);
+    console.log('context guessed letters: ', guessedLetters)
+    console.log('ref guessed letters: ', refGuessedLetters)
     useEffect(() => {
         setResult(renderWord());
         if (mistakes == maxMistakes - 1) {
@@ -24,15 +26,18 @@ function Word2() {
         let lastLetter = word[word.length - 1];
         let res = []
         arr.forEach(ch => {
-            ch == firstLetter || ch == lastLetter || ch == clickedLetter || refGuessedLetters.current.includes(ch) ?
-                res.push(ch) && refGuessedLetters.current.push(ch)
+            ch == firstLetter || ch == lastLetter || ch == clickedLetter || guessedLetters.has(ch) ?
+                res.push(ch) && refGuessedLetters.current.push(ch) &&  dispatch({ type: 'SET_GUESSED_LETTERS', payload: ch })
                 :
                 res.push("_ ");
         });
         if (!refGuessedLetters.current.includes(clickedLetter)) {
             dispatch({ type: 'INCREASE_MISTAKES' });
+        } else {
+            dispatch({ type: 'SET_GUESSED_LETTERS', payload: refGuessedLetters.current })
         }
         refResult.current = res;
+        console.log(refResult.current)
         return res;
     }
 
@@ -41,4 +46,4 @@ function Word2() {
     );
 }
 
-export default Word2;
+export default Word;

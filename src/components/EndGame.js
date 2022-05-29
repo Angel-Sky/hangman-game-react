@@ -1,9 +1,11 @@
-import { useEffect, useRef, useContext } from 'react';
+import { useContext } from 'react';
 import GameContext from '../context/GameContext';
 
 function EndGame() {
     const [{ word, isOver }, dispatch] = useContext(GameContext);
-
+    const resetGame = () => {
+        dispatch({ type: 'RESET_GAME' });
+    }
     return (
         <>{isOver.result == 'loss'
             ?
@@ -11,7 +13,7 @@ function EndGame() {
             :
             <p>You win! Congratulations!</p>
         }
-            <button>Play again</button>
+            <button onClick={resetGame}>Play again</button>
         </>
     )
 }
