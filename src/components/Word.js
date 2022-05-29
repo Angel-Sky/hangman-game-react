@@ -25,15 +25,13 @@ function Word() {
         let lastLetter = word[word.length - 1];
         let res = []
         arr.forEach(ch => {
-            ch == firstLetter || ch == lastLetter || ch == clickedLetter || guessedLetters.has(ch) ?
+            ch == firstLetter || ch == lastLetter || ch == clickedLetter || guessedLetters.includes(ch) ?
                 res.push(ch) && refGuessedLetters.current.push(ch) &&  dispatch({ type: 'SET_GUESSED_LETTERS', payload: ch })
                 :
                 res.push("_ ");
         });
-        if (!refGuessedLetters.current.includes(clickedLetter)) {
+        if (!refGuessedLetters.current.includes(clickedLetter) && clickedLetter !== "") {
             dispatch({ type: 'INCREASE_MISTAKES' });
-        } else {
-            dispatch({ type: 'SET_GUESSED_LETTERS', payload: refGuessedLetters.current })
         }
         refResult.current = res;
        
