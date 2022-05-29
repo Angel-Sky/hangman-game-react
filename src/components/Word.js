@@ -6,8 +6,7 @@ function Word() {
     const [result, setResult] = useState(['_ ']);
     const refGuessedLetters = useRef([guessedLetters]);
     const refResult = useState(['_ ']);
-    console.log('context guessed letters: ', guessedLetters)
-    console.log('ref guessed letters: ', refGuessedLetters)
+   
     useEffect(() => {
         setResult(renderWord());
         if (mistakes == maxMistakes - 1) {
@@ -37,7 +36,7 @@ function Word() {
             dispatch({ type: 'SET_GUESSED_LETTERS', payload: refGuessedLetters.current })
         }
         refResult.current = res;
-        console.log(refResult.current)
+       
         return res;
     }
 
