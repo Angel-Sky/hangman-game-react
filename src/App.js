@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { useReducer, useEffect, useState } from 'react';
 import GameContext from './context/GameContext';
@@ -7,7 +6,7 @@ import Word from './components/Word';
 import Image from './components/Image'
 import Score from './components/Score'
 import EndGame from './components/EndGame'
-import {gameReducer, finalState } from './context/reducer';
+import { gameReducer, finalState } from './context/reducer';
 
 function App() {
     const [gameState, dispatch] = useReducer(gameReducer, finalState);
@@ -19,8 +18,10 @@ function App() {
     return (
         <GameContext.Provider value={[gameState, dispatch]}>
             <div className="App">
-                <h1>Hangman Game</h1>
-                <Score />
+                <h1 id='heading'>Hangman Game</h1>
+                {!gameState.isOver.status &&
+                    <Score />
+                }
                 <Image />
                 <Word />
                 {gameState.isOver.status

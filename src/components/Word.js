@@ -1,3 +1,4 @@
+import './Word.css'
 import { useState, useEffect, useRef, useContext } from 'react';
 import GameContext from '../context/GameContext';
 
@@ -39,7 +40,7 @@ function Word() {
     }
 
     return (
-        <div>{result?.map((x, i) => <span key={i}>{x}</span>)}</div>
+        <div id="word">{result?.map((x, i) => <span key={i}>{x}</span>)}</div>
     );
 }
 

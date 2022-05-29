@@ -1,3 +1,4 @@
+import './Letters.css'
 import { useEffect, useRef, useContext } from 'react';
 import GameContext from '../context/GameContext';
 const aplhabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -59,15 +60,15 @@ function Letters() {
     }
 
     return (
-        <div>{
+        <div id='letters'>{
             refRandomLetters.current?.map((letter, i) =>
                 <>
                     {allClickedLetters.includes(letter) ?
-                        <button disabled={true} key={i}>
+                        <button className='btn-letter' disabled={true} key={i}>
                             {letter}
                         </button>
                         :
-                        <button onClick={handleCharClick} key={i}>
+                        <button className='btn-letter' onClick={handleCharClick} key={i}>
                             {letter}
                         </button>
                     }

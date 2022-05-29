@@ -1,0 +1,8 @@
+#endGame p {
+    margin: 0px;
+}
+
+#playAgain {
+    margin-bottom: -6px;
+    cursor: pointer;
+}

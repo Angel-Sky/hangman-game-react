@@ -1,3 +1,4 @@
+import './Image.css'
 import { useState, useContext } from "react";
 import GameContext from "../context/GameContext";
 
@@ -18,7 +19,9 @@ function Image() {
     const [img] = useState([step0, step1, step2, step3, step4, step5, step6, step7, step8, step8, step9, step10]);
 
     return (
-        <img src={img[gameState.mistakes]}></img>
+        <div id="progrressImg">
+            <img src={img[gameState.mistakes]}></img>
+        </div>
     );
 }
 
