@@ -9,6 +9,7 @@ const randomWord = () => { return gameWords[Math.floor(Math.random() * gameWords
 const innitialState = {
     word: randomWord(),
     clickedLetter: '',
+    allClickedLetters: [],
     mistakes: 0,
     maxMistakes: 10,
     isOver: { status: false, result: 'win' },
@@ -24,8 +25,10 @@ const gameReducer = (state, action) => {
     switch (action.type) {
         case 'SET_LETTER':
             return { ...state, clickedLetter: action.payload };
+        case 'SET_CLICKED_LETTERS': 
+            return {...state, allClickedLetters: [...state.allClickedLetters, action.payload]}
         case 'SET_RANDOM_LETTERS':
-            return { ...state, randomLetters: [...state.randomLetters, action.payload] };
+            return { ...state, randomLetters: [action.payload] };
         case 'SET_GUESSED_LETTERS':
             return { ...state, guessedLetters: [...state.guessedLetters, action.payload] };
         case 'INCREASE_MISTAKES':
@@ -38,6 +41,7 @@ const gameReducer = (state, action) => {
             return {
                 ...state, word: gameWords[Math.floor(Math.random() * gameWords.length)],
                 clickedLetter: '',
+                allClickedLetters: [],
                 mistakes: 0,
                 maxMistakes: 10,
                 isOver: { status: false, result: 'win' },

@@ -3,13 +3,14 @@ import GameContext from '../context/GameContext';
 const aplhabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
 function Letters() {
-    const [{ word, randomLetters }, dispatch] = useContext(GameContext);
+    const [{ word, randomLetters, allClickedLetters }, dispatch] = useContext(GameContext);
     const refNewLetter = useRef();
     const refRandomLetters = useRef([]);
 
     useEffect(() => {
-        if(randomLetters.length > 0) {
-           refRandomLetters.current = randomLetters;
+        console.log(allClickedLetters)
+        if (randomLetters.length > 0) {
+            refRandomLetters.current = randomLetters[0]
         } else {
             generateLetters();
         }
@@ -36,15 +37,17 @@ function Letters() {
             }
             result.add(randomLetter);
         }
-        
-        refRandomLetters.current = shuffleLetters([...result])
-        dispatch({ type: 'SET_RANDOM_LETTERS', payload: refRandomLetters.current });
+        let shuffle = shuffleLetters(Array.from(result))
+        console.log(shuffle)
+        refRandomLetters.current = shuffle
+        dispatch({ type: 'SET_RANDOM_LETTERS', payload: shuffle });
     }
 
     function handleCharClick(e) {
         e.preventDefault();
         refNewLetter.current = e.target.innerHTML;
         dispatch({ type: 'SET_LETTER', payload: refNewLetter.current });
+        dispatch({ type: 'SET_CLICKED_LETTERS', payload: refNewLetter.current });
     }
 
     function shuffleLetters(array) {
@@ -56,12 +59,21 @@ function Letters() {
     }
 
     return (
-        <div>{refRandomLetters.current[0]?.map((x, i) =>
-            <button
-                onClick={handleCharClick}
-                key={i}>
-                {x}
-            </button>)}
+        <div>{
+            refRandomLetters.current?.map((letter, i) =>
+                <>
+                    {allClickedLetters.includes(letter) ?
+                        <button disabled={true} key={i}>
+                            {letter}
+                        </button>
+                        :
+                        <button onClick={handleCharClick} key={i}>
+                            {letter}
+                        </button>
+                    }
+                </>
+            )
+        }
         </div>
     );
 }
