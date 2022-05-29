@@ -1,12 +1,18 @@
-function EndGame({ answer, result }) {
-    console.log(result)
+import { useEffect, useRef, useContext } from 'react';
+import GameContext from '../context/GameContext';
+
+function EndGame() {
+    const [{ word, isOver }, dispatch] = useContext(GameContext);
+
     return (
-        <>{result == 'loss'
+        <>{isOver.result == 'loss'
             ?
-            <p>Game Over! The right answer was <b>{answer}</b></p>
+            <p>Game Over! The right answer was <b>{word}</b></p>
             :
-            <p>You win!</p>
-        } </>
+            <p>You win! Congratulations!</p>
+        }
+            <button>Play again</button>
+        </>
     )
 }
 

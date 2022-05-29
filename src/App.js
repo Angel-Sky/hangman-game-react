@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { useState, useRef } from 'react';
+import { useReducer } from 'react';
+import GameContext from './context/GameContext';
 import Letters from './components/Letters';
 import Word from './components/Word';
 import Image from './components/Image'
@@ -13,42 +14,50 @@ const gameWords = [
     // 'machine'
 ]
 const aplhabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-const randomWord = gameWords[Math.floor(Math.random() * gameWords.length)];
+const randomWord = () => { return gameWords[Math.floor(Math.random() * gameWords.length)]; }
 
 function App() {
-    const [clickedLetter, setClickedLetter] = useState('');
-    const [guessedLetters, setGuessedLetters] = useState(new Set());
-    const [mistakes, setMistakes] = useState(-1);
-    const [maxMistakes] = useState(10);
-    const [isOver, setIsOver] = useState({ status: false, result: 'win' });
-    const refAnswer = useRef();
-
-    const sendClickedLetter = (r) => {
-        setClickedLetter(r);
+    const gameReducer = (state, action) => {
+        switch (action.type) {
+            case 'SET_LETTER':
+                return { ...state, clickedLetter: action.payload };
+            case 'SET_RANDOM_LETTERS':
+                return { ...state, randomLetters: [action.payload] };
+            case 'INCREASE_MISTAKES':
+                return { ...state, mistakes: state.mistakes + 1 };
+            case 'RESET_MISTAKES':
+                return { ...state, mistakes: 0 };
+            case 'END_GAME':
+                return { ...state, isOver: action.payload }
+            default:
+                return state;
+        }
     };
+    const [gameState, dispatch] = useReducer(gameReducer, {
+        word: randomWord(),
+        clickedLetter: '',
+        mistakes: -2,
+        maxMistakes: 10,
+        isOver: { status: false, result: 'win' },
+        randomLetters: []
+    });
 
-    const sendMistakes = (r) => {
-        setMistakes(r);
-    }
-
-    const sendGameStatus = (status, result) => {
-        setIsOver(status, result);
-    }
 
     return (
-        <div className="App">
-            <h1>Hangman Game</h1>
-            <Score mistakes={mistakes} maxMistakes={maxMistakes} sendGameStatus={sendGameStatus} />
-            <Image mistakes={mistakes} />
-            <Word answer={randomWord} clickedLetter={clickedLetter} mistakes={mistakes} maxMistakes={maxMistakes} sendMistakes={sendMistakes} sendGameStatus={sendGameStatus} />
-
-            {isOver.status
-                ?
-                <EndGame answer={randomWord} result={isOver.result} />
-                :
-                <Letters word={randomWord} aplhabet={aplhabet} sendClickedLetter={sendClickedLetter} />
-            }
-        </div>
+        <GameContext.Provider value={[gameState, dispatch]}>
+            <div className="App">
+                <h1>Hangman Game</h1>
+                <Score />
+                <Image />
+                <Word />
+                {gameState.isOver.status
+                    ?
+                    <EndGame />
+                    :
+                    <Letters aplhabet={aplhabet} />
+                }
+            </div>
+        </GameContext.Provider>
     );
 }
 

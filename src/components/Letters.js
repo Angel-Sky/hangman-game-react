@@ -1,9 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { Button } from 'react-bootstrap';
+import { useEffect, useRef, useContext } from 'react';
+import GameContext from '../context/GameContext';
 
-function Letters({ word, aplhabet, sendClickedLetter }) {
-    const [randomLetters, setRandomLetters] = useState([]);
+function Letters2({ aplhabet }) {
+    const [{ word }, dispatch] = useContext(GameContext);
     const refNewLetter = useRef();
+    const refRandomLetters = useRef([]);
 
     useEffect(() => {
         let result = new Set();
@@ -26,35 +27,25 @@ function Letters({ word, aplhabet, sendClickedLetter }) {
             }
             result.add(randomLetter);
         }
-
-        setRandomLetters([...result])
+        refRandomLetters.current = [...result]
+        dispatch({ type: 'SET_RANDOM_LETTERS', payload: refRandomLetters.current });
     }, [])
 
-    useEffect(() => {
-        console.log('changed', refNewLetter);
-    }, [refNewLetter]);
-
-    function updateLetter(char) {
-        refNewLetter.current = char;
-    }
-
-
-    async function handleCharClick(e) {
+    function handleCharClick(e) {
         e.preventDefault();
-        let char = e.target.innerHTML;
-        updateLetter(char);
-        await sendClickedLetter(refNewLetter.current);
+        refNewLetter.current = e.target.innerHTML;
+        dispatch({ type: 'SET_LETTER', payload: refNewLetter.current });
     }
 
     return (
-        <div>{randomLetters.map((x, i) =>
-            <Button variant="info"
+        <div>{refRandomLetters.current?.map((x, i) =>
+            <button
                 onClick={handleCharClick}
                 key={i}>
                 {x}
-            </Button>)}
+            </button>)}
         </div>
     );
 }
 
-export default Letters;
+export default Letters2;

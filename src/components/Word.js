@@ -1,25 +1,27 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+import GameContext from '../context/GameContext';
 
-function Word({ answer, clickedLetter, mistakes, maxMistakes, sendMistakes, sendGameStatus }) {
+function Word2() {
+    const [{ word, clickedLetter, mistakes, maxMistakes }, dispatch] = useContext(GameContext);
     const [result, setResult] = useState(['_ ']);
     const refGuessedLetters = useRef([]);
     const refResult = useState(['_ ']);
     useEffect(() => {
-        setResult(innitialWord(answer, clickedLetter));
+        setResult(renderWord());
         if (mistakes == maxMistakes - 1) {
-            sendGameStatus({status: true, result: 'loss'})
+            dispatch({ type: 'END_GAME', payload: { status: true, result: 'loss' } });
         }
         if (!refResult.current.includes("_ ")) {
-            console.log("win")
-            sendGameStatus({status: true, result: 'win'})
+            dispatch({ type: 'END_GAME', payload: { status: true, result: 'win' } });
+            dispatch({ type: 'RESET_MISTAKES' }); //so that the character can start smiling
         }
-        
+
     }, [clickedLetter])
 
-    function innitialWord(answer, clickedLetter) {
-        let arr = answer.split("")
-        let firstLetter = answer[0];
-        let lastLetter = answer[answer.length - 1];
+    function renderWord() {
+        let arr = word.split("")
+        let firstLetter = word[0];
+        let lastLetter = word[word.length - 1];
         let res = []
         arr.forEach(ch => {
             ch == firstLetter || ch == lastLetter || ch == clickedLetter || refGuessedLetters.current.includes(ch) ?
@@ -28,7 +30,7 @@ function Word({ answer, clickedLetter, mistakes, maxMistakes, sendMistakes, send
                 res.push("_ ");
         });
         if (!refGuessedLetters.current.includes(clickedLetter)) {
-            sendMistakes(Number(mistakes) + 1);
+            dispatch({ type: 'INCREASE_MISTAKES' });
         }
         refResult.current = res;
         return res;
@@ -39,4 +41,4 @@ function Word({ answer, clickedLetter, mistakes, maxMistakes, sendMistakes, send
     );
 }
 
-export default Word;
+export default Word2;
