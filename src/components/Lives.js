@@ -1,10 +1,10 @@
-import './Score.css'
+import './Lives.css'
 import { useContext, useEffect, useState } from "react";
 import GameContext from "../context/GameContext";
 import { Progress } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Score() {
+function Lives() {
     const [{ mistakes, maxMistakes }] = useContext(GameContext);
     const [progressColor, setProgressColor] = useState('success')
 
@@ -20,12 +20,12 @@ function Score() {
 
     return (
         <div className='row justify-content-md-center'>
-            <div id="score" className='col-6 text-center'>
-                <div> Score <b>{mistakes}</b> out of <b>{maxMistakes}</b></div>
+            <div id="lives" className='col-6 text-center'>
+                <div> Lives <b>{maxMistakes - mistakes}</b> out of <b>{maxMistakes}</b></div>
                 <Progress striped value={100 - mistakes * 10} color={progressColor} />
             </div>
         </div>
     )
 }
 
-export default Score;
+export default Lives;

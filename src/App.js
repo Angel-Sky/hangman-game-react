@@ -4,7 +4,7 @@ import GameContext from './context/GameContext';
 import Letters from './components/Letters';
 import Word from './components/Word';
 import Image from './components/Image'
-import Score from './components/Score'
+import Lives from './components/Lives'
 import EndGame from './components/EndGame'
 import { gameReducer, finalState } from './context/reducer';
 
@@ -20,7 +20,7 @@ function App() {
             <div className="App">
                 <h1 id='heading'>Hangman Game</h1>
                 {!gameState.isOver.status &&
-                    <Score />
+                    <Lives />
                 }
                 <Image />
                 <Word />
