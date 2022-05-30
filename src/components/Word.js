@@ -9,7 +9,6 @@ function Word() {
     const refResult = useState(['_ ']);
 
     useEffect(() => {
-        console.log(guessedLetters)
         setResult(renderWord());
         if (mistakes == maxMistakes - 1) {
             dispatch({ type: 'END_GAME', payload: { status: true, result: 'loss' } });
@@ -38,9 +37,9 @@ function Word() {
             }
 
         });
-        if (!refGuessedLetters.current.includes(clickedLetter) && clickedLetter !== "") {
-            dispatch({ type: 'INCREASE_MISTAKES' });
-        }
+        // if (!refGuessedLetters.current.includes(clickedLetter) && clickedLetter !== "") {
+        //     dispatch({ type: 'INCREASE_MISTAKES', payload: mistakes + 1 });
+        // }
         refResult.current = res;
 
         return res;

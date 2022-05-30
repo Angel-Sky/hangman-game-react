@@ -41,6 +41,9 @@ function Letters() {
         refNewLetter.current = e.target.innerHTML;
         dispatch({ type: 'SET_LETTER', payload: refNewLetter.current });
         dispatch({ type: 'SET_CLICKED_LETTERS', payload: refNewLetter.current });
+        if (!word.includes(e.target.innerHTML)) {
+            dispatch({ type: 'INCREASE_MISTAKES'});
+        }
     }
 
     function shuffleLetters(array) {
