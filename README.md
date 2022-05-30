@@ -1,70 +1,20 @@
-# Getting Started with Create React App
+# Hangman Game with Create React App
+## Condition of the task
+The game should have an array of short and simple words. At the beginning, load a random word from the array, for which show only the first and the last letter. If there are others that are the same as the first or last one, they also should be show at the beginning. Also make an array of all the letters. Let the array generate as many letters as the word contains in * 2 (and a minimum of 10 letters), making sure that the necessary letters exist in them to guess the word and that there are no repeats. For example, the word is TELEPHONE. Therefore the player will be able to choose from 18 letters to guess the word. If it is dog, then he will choose from 10 letters as that is the minimum.
+On each turn, the player's lives will decrease if he is wrong and a letter will be revealed if he guesses. The player has 10 tries. The reduction of lives must be done in two ways: The first one is a standard gallows - you can try to find or draw 10 pictures of the different stays on the gallows on a board and show them one after the other. The other is using a ProgressBar from Reactstrap, which at the beginning is filled and glows green. When it drops below 5 attempts to glow yellow and below 3 attempts to glow red, and decrease progressively. 
+The game progress should be saved so if the player exits the browser or closes the tab, then come back they can continue from where they left off. If the player makes their 10 attempts and doesn't guess the word, the system should display Game Over and have a Play Again option. If the player guesses the word, the system should display Congratulations and a Play Again option. Play Again should not reload the page, but use the straight to make a new play.
+Use ES6 syntax, functional components and good folder names, files and variables. Write comments on the more complex functions explaining how work.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Preview of the solution
 
-## Available Scripts
+![preview](http://store.picbg.net/pubpic/3B/89/0422538f497a3b89.png)
 
-In the project directory, you can run:
+
+## How to run 
+### `npm install`
+
+Installs all dependances
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Runs the app on [http://localhost:3000](http://localhost:3000).
