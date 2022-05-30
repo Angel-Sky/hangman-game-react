@@ -6,15 +6,12 @@ const aplhabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 function Letters() {
     const [{ word, randomLetters, allClickedLetters }, dispatch] = useContext(GameContext);
     const refNewLetter = useRef();
-    const refRandomLetters = useRef([]);
+    const refRandomLetters = useRef([...randomLetters]);
 
     useEffect(() => {
-        console.log(allClickedLetters)
-        if (randomLetters.length > 0) {
-            refRandomLetters.current = randomLetters[0]
-        } else {
+        if (randomLetters.length == 0) {
             generateLetters();
-        }
+        } 
     }, [])
 
     function generateLetters() {
@@ -29,13 +26,8 @@ function Letters() {
         result.delete(word[0]); //remove first letter 
         result.delete(word[word.length - 1]); //remove last letter
 
-        let uniqueLength = word.length - result.size;
-
-        for (let i = 0; i < n - uniqueLength; i++) {
+        while (result.size < n) {
             let randomLetter = diffLetters[Math.floor(Math.random() * diffLetters.length)]
-            while (result.has(randomLetter)) { //in case the random generated char is already into the collection
-                randomLetter = diffLetters[Math.floor(Math.random() * diffLetters.length)]
-            }
             result.add(randomLetter);
         }
         let shuffle = shuffleLetters(Array.from(result))
