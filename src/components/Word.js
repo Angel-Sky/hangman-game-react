@@ -10,7 +10,7 @@ function Word() {
 
     useEffect(() => {
         setResult(renderWord());
-        if (mistakes == maxMistakes - 1) {
+        if (mistakes == maxMistakes) {
             dispatch({ type: 'END_GAME', payload: { status: true, result: 'loss' } });
         }
         if (!refResult.current.includes("_ ")) {
