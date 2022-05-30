@@ -7,8 +7,9 @@ function Word() {
     const [result, setResult] = useState(['_ ']);
     const refGuessedLetters = useRef([guessedLetters]);
     const refResult = useState(['_ ']);
-   
+
     useEffect(() => {
+        console.log(guessedLetters)
         setResult(renderWord());
         if (mistakes == maxMistakes - 1) {
             dispatch({ type: 'END_GAME', payload: { status: true, result: 'loss' } });
@@ -26,16 +27,22 @@ function Word() {
         let lastLetter = word[word.length - 1];
         let res = []
         arr.forEach(ch => {
-            ch == firstLetter || ch == lastLetter || ch == clickedLetter || guessedLetters.includes(ch) ?
-                res.push(ch) && refGuessedLetters.current.push(ch) &&  dispatch({ type: 'SET_GUESSED_LETTERS', payload: ch })
-                :
+            if (ch == firstLetter || ch == lastLetter || ch == clickedLetter || guessedLetters.includes(ch)) {
+                res.push(ch);
+                refGuessedLetters.current.push(ch);
+                if (!guessedLetters.includes(ch)) {
+                    dispatch({ type: 'SET_GUESSED_LETTERS', payload: ch })
+                }
+            } else {
                 res.push("_ ");
+            }
+
         });
         if (!refGuessedLetters.current.includes(clickedLetter) && clickedLetter !== "") {
             dispatch({ type: 'INCREASE_MISTAKES' });
         }
         refResult.current = res;
-       
+
         return res;
     }
 
