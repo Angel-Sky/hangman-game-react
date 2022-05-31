@@ -1,25 +1,6 @@
-const gameWords = [
-    'notebook',
-    'calculator',
-    'machine',
-    'cucumber',
-    'avenue',
-    'zombie',
-    'microwave',
-    'oxygen',
-    'awkward',
-    'gossip',
-    'icebox',
-    'science',
-    'salamandra',
-    'hippopotamus',
-    'ostrich',
-    'submarine',
-    'rabbit',
-    'generation',
-    'always',
-    'cake'
-]
+let words = require('an-array-of-english-words');
+
+const gameWords = words.filter(d => d.length >= 4);
 
 const randomWord = () => { return gameWords[Math.floor(Math.random() * gameWords.length)]; }
 
